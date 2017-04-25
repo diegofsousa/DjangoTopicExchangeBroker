@@ -8,6 +8,7 @@ from services import APIServer
 class index(QDialog):
 	def __init__(self, parent=None):
 		super(index, self).__init__(parent)
+		self.api = APIServer()
 
 		self.labelAPI = QLabel("API Rest (Rest atualmente inativo)")
 		self.buttonStartAPI = QPushButton("Start Rest")
@@ -41,9 +42,20 @@ class index(QDialog):
 
 
 	def start_api(self):
-		self.api = APIServer()
+		
 		self.api.start()
+		
 		self.labelAPI.setText("API Rest (ativo)")
+		self.buttonStartAPI.setText("Stop rest")
+		self.connect(self.buttonStartAPI, SIGNAL("clicked()"), self.stop_api)
+
+	def stop_api(self):
+		print(dir(self.api))
+		self.api.exit()
+		self.api.sleep(1000)
+		self.labelAPI.setText("API Rest (Rest atualmente inativo)")
+		self.buttonStartAPI.setText("Start rest")
+		self.connect(self.buttonStartAPI, SIGNAL("clicked()"), self.start_api)
 
 
 app = QApplication(sys.argv)
