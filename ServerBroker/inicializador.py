@@ -14,5 +14,6 @@ def start():
 	call_command('runserver', '0.0.0.0:8000', '--noreload')
 
 def stop():
-	os.system("kill -SIGINT processPIDHere")
+	print(dir(django.core.management.find_commands))
+	#django.core.management.sys.exit()
 
